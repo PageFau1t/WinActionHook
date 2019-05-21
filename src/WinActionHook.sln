@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console", "Console\Console.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionHook", "ActionHook\ActionHook.csproj", "{3FE36EF6-D2DF-4C09-9263-487058A6A823}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{B782E0A2-CC71-4A1F-9DD3-4B31BC253234}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5B959CC8-9F58-42EE-B62A-62495FF3CE65} = {5B959CC8-9F58-42EE-B62A-62495FF3CE65}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +46,18 @@ Global
 		{3FE36EF6-D2DF-4C09-9263-487058A6A823}.Release|x64.Build.0 = Release|Any CPU
 		{3FE36EF6-D2DF-4C09-9263-487058A6A823}.Release|x86.ActiveCfg = Release|Any CPU
 		{3FE36EF6-D2DF-4C09-9263-487058A6A823}.Release|x86.Build.0 = Release|Any CPU
+		{B782E0A2-CC71-4A1F-9DD3-4B31BC253234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B782E0A2-CC71-4A1F-9DD3-4B31BC253234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B782E0A2-CC71-4A1F-9DD3-4B31BC253234}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B782E0A2-CC71-4A1F-9DD3-4B31BC253234}.Debug|x64.Build.0 = Debug|Any CPU
+		{B782E0A2-CC71-4A1F-9DD3-4B31BC253234}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B782E0A2-CC71-4A1F-9DD3-4B31BC253234}.Debug|x86.Build.0 = Debug|Any CPU
+		{B782E0A2-CC71-4A1F-9DD3-4B31BC253234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B782E0A2-CC71-4A1F-9DD3-4B31BC253234}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B782E0A2-CC71-4A1F-9DD3-4B31BC253234}.Release|x64.ActiveCfg = Release|Any CPU
+		{B782E0A2-CC71-4A1F-9DD3-4B31BC253234}.Release|x64.Build.0 = Release|Any CPU
+		{B782E0A2-CC71-4A1F-9DD3-4B31BC253234}.Release|x86.ActiveCfg = Release|Any CPU
+		{B782E0A2-CC71-4A1F-9DD3-4B31BC253234}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
