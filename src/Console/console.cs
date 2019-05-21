@@ -131,7 +131,7 @@ namespace ActionHook.ConsoleApp
         {
             Console.WriteLine("in ConsoleApp2.run()");
             keyboardWatcher.Start();
-            //mouseWatcher.Start();
+            mouseWatcher.Start();
 
 
             Task.Factory.StartNew(async () =>

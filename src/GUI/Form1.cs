@@ -47,7 +47,7 @@ namespace GUI
 
             //btn_start.disable();
 
-            }
+        }
 
         private void btn_stop_Click(object sender, EventArgs e)
         {
