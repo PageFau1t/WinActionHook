@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ActionHook.ConsoleApp;
 
 
 namespace GUI
@@ -17,6 +16,8 @@ namespace GUI
     {
         private Semaphore semaphore;
         private Thread thread;
+        private Task task_Reporter;
+        private CancellationTokenSource reporterCancellation = new CancellationTokenSource();
 
         public Form1()
         {
@@ -45,12 +46,25 @@ namespace GUI
             this.thread = new Thread(() => app.run(this.semaphore));
             this.thread.Start();
 
+            task_Reporter = Task.Run(() => { ScheduledReporter.Run(reporterCancellation.Token); }, reporterCancellation.Token);
+
+
+
             //btn_start.disable();
 
         }
 
         private void btn_stop_Click(object sender, EventArgs e)
         {
+            
+            try
+            {
+                reporterCancellation.Cancel();
+            }catch (OperationCanceledException)
+            {
+
+            }
+            
             this.semaphore.Release();
             Console.WriteLine("in btn_stop_Click, release semaphore");
             this.thread.Join();
