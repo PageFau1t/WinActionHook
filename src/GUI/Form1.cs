@@ -20,7 +20,7 @@ namespace GUI
         private Thread thread;
         private string tmp_str;
         private Task task_Reporter;
-        private CancellationTokenSource reporterCancellation = new CancellationTokenSource();
+        private CancellationTokenSource reporterCancellation;
 
         public Form1()
         {
@@ -51,7 +51,8 @@ namespace GUI
             Console.WriteLine("start thread!");
             this.thread.Start();
 
-            task_Reporter = Task.Run(() => { ScheduledReporter.Run(reporterCancellation.Token); }, reporterCancellation.Token);
+            reporterCancellation = new CancellationTokenSource();
+            task_Reporter = Task.Run(() => { ScheduledReporter.Run(reporterCancellation.Token, url); }, reporterCancellation.Token);
 
 
 
@@ -62,15 +63,8 @@ namespace GUI
 
         private void btn_stop_Click(object sender, EventArgs e)
         {
-            
-            try
-            {
-                reporterCancellation.Cancel();
-            }catch (OperationCanceledException)
-            {
-
-            }
-            
+            reporterCancellation.Cancel();
+            task_Reporter.Dispose();
             this.semaphore.Release();
             Console.WriteLine("in btn_stop_Click, release semaphore");
             this.thread.Join();

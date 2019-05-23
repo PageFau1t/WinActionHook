@@ -8,7 +8,7 @@ import tornado.httpserver
 class AnnounceHandler(tornado.web.RequestHandler):
     # post: /announce
     async def post(self):
-        print(self.get_argument("b"))
+        print(self.get_argument("cpuid"))
         self.write('ACK')
 
 def make_app():

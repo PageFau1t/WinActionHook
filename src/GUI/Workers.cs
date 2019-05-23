@@ -50,7 +50,7 @@ namespace GUI
             keyboardWatcher.Start();
             mouseWatcher.Start();
 
-            
+
             // 获得到信号量表示结束这一线程
             semaphore.WaitOne();
             keyboardWatcher.Stop();
@@ -64,7 +64,7 @@ namespace GUI
 
     public class ScheduledReporter
     {
-        async public static void Run(CancellationToken ct)
+        async public static void Run(CancellationToken ct, string url)
         {
             // 示例发送HTTP报文
             Dictionary<string, string> dic = new Dictionary<string, string>();
@@ -78,12 +78,16 @@ namespace GUI
                 try
                 {
                     ct.ThrowIfCancellationRequested();
-                }catch(OperationCanceledException)
-                {
-                    break;
                 }
-                string responseBody = Post("http://localhost:8086/announce", dic);
-                Console.WriteLine(responseBody);
+                catch (OperationCanceledException)
+                { break; }
+                try
+                {
+                    string responseBody = Post(url, dic);
+                    Console.WriteLine(responseBody);
+                }
+                catch (System.Net.WebException)
+                { }
             }
         }
 
