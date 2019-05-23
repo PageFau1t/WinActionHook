@@ -17,6 +17,7 @@ namespace GUI
         private EventHookFactory eventHookFactory;
         private MouseWatcher mouseWatcher;
         private KeyboardWatcher keyboardWatcher;
+        private string tmp_str = "";
 
         public ConsoleApp2(TextBox tb_keyboard, TextBox tb_mouse)
         {
@@ -29,6 +30,7 @@ namespace GUI
                 string msg = $"Key {e.KeyData.EventType} event of key {e.KeyData.Keyname}";
                 tb_keyboard.Text = msg;
                 Console.WriteLine(msg);
+                tmp_str += msg + "\n";
             };
 
             this.mouseWatcher = eventHookFactory.GetMouseWatcher();
@@ -37,22 +39,25 @@ namespace GUI
                 string msg = $"Mouse event {e.Message.ToString()} at point {e.Point.x},{e.Point.y}";
                 tb_mouse.Text = msg;
                 Console.WriteLine(msg);
+                tmp_str += msg + "\n";
             };
         }
 
-        public void run(Semaphore semaphore)
+        public string run(Semaphore semaphore, string url)
         {
             Console.WriteLine("in ConsoleApp2.run()");
+            tmp_str = "";
             keyboardWatcher.Start();
             mouseWatcher.Start();
 
             
             // 获得到信号量表示结束这一线程
             semaphore.WaitOne();
-
             keyboardWatcher.Stop();
             mouseWatcher.Stop();
             eventHookFactory.Dispose();
+
+            return tmp_str;
         }
 
     }
