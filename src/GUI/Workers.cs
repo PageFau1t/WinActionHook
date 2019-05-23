@@ -1,69 +1,85 @@
-﻿using System;
+﻿using ActionHook;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
+using System.Threading;
 using System.Text;
 using System.Threading.Tasks;
-using ActionHook;
-using System.Threading;
 using System.Windows.Forms;
+using System.Net;
 using System.Management;
 
-namespace ActionHook.ConsoleApp
+namespace GUI
 {
-    public class ConsoleApp
+    public class ConsoleApp2
     {
+        private EventHookFactory eventHookFactory;
+        private MouseWatcher mouseWatcher;
+        private KeyboardWatcher keyboardWatcher;
 
-        static void Main(string[] args)
+        public ConsoleApp2(TextBox tb_keyboard, TextBox tb_mouse)
         {
-            var eventHookFactory = new EventHookFactory();
-            //Queue<string> events = new Queue<string>();
+            Console.WriteLine("New ConsoleApp2!");
+            this.eventHookFactory = new EventHookFactory();
 
-            // 用工厂方法获得watcher对象
-            var keyboardWatcher = eventHookFactory.GetKeyboardWatcher();
-            // 启动钩子
+            this.keyboardWatcher = eventHookFactory.GetKeyboardWatcher();
+            this.keyboardWatcher.OnKeyInput += (s, e) =>
+            {
+                string msg = $"Key {e.KeyData.EventType} event of key {e.KeyData.Keyname}";
+                tb_keyboard.Text = msg;
+                Console.WriteLine(msg);
+            };
+
+            this.mouseWatcher = eventHookFactory.GetMouseWatcher();
+            this.mouseWatcher.OnMouseInput += (s, e) =>
+            {
+                string msg = $"Mouse event {e.Message.ToString()} at point {e.Point.x},{e.Point.y}";
+                tb_mouse.Text = msg;
+                Console.WriteLine(msg);
+            };
+        }
+
+        public void run(Semaphore semaphore)
+        {
+            Console.WriteLine("in ConsoleApp2.run()");
             keyboardWatcher.Start();
-            // 添加按键信息的回调方法
-            keyboardWatcher.OnKeyInput += (s, e) =>
-            {
-                Console.WriteLine("Key {0} event of key {1}", e.KeyData.EventType, e.KeyData.Keyname);
-                //string out1 = "";
-                //events += string.Format("Key {0} event of key {1}", e.KeyData.EventType, e.KeyData.Keyname);
+            mouseWatcher.Start();
 
-                //Console.WriteLine(ss);
-            };
-
-            var mouseWatcher = eventHookFactory.GetMouseWatcher();
-            //mouseWatcher.Start();
-            mouseWatcher.OnMouseInput += (s, e) =>
-            {
-                Console.WriteLine("Mouse event {0} at point {1},{2}", e.Message.ToString(), e.Point.x, e.Point.y);
-            };
-
-            // 示例发送HTTP报文
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-            dic.Add("0", "11");
-            dic.Add("a", "4");
-            dic.Add("b", "2019");
-
-            Task.Factory.StartNew(async () =>
-            {
-                for (; ; )
-                {
-                    await Task.Delay(1000);
-                    string responseBody = Post("http://localhost:8086/announce", dic);
-                    Console.WriteLine(responseBody);
-                }
-
-            });
-
-            // 主线程阻塞在这里 输入一行退出
-            Console.Read();
+            
+            // 获得到信号量表示结束这一线程
+            semaphore.WaitOne();
 
             keyboardWatcher.Stop();
             mouseWatcher.Stop();
             eventHookFactory.Dispose();
+        }
+
+    }
+
+    public class ScheduledReporter
+    {
+        async public static void Run(CancellationToken ct)
+        {
+            // 示例发送HTTP报文
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic.Add("cpuid", Get_CPUID());
+            dic.Add("a", "4");
+            dic.Add("b", "2019");
+
+            for (; ; )
+            {
+                await Task.Delay(1000);
+                try
+                {
+                    ct.ThrowIfCancellationRequested();
+                }catch(OperationCanceledException)
+                {
+                    break;
+                }
+                string responseBody = Post("http://localhost:8086/announce", dic);
+                Console.WriteLine(responseBody);
+            }
         }
 
         #region HTTP-post
