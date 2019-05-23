@@ -64,7 +64,7 @@ namespace GUI
 
     public class ScheduledReporter
     {
-        async public static void Run(CancellationToken ct)
+        async public static void Run(CancellationToken ct, string url)
         {
             // 示例发送HTTP报文
             Dictionary<string, string> dic = new Dictionary<string, string>();
@@ -83,7 +83,7 @@ namespace GUI
                 { break; }
                 try
                 {
-                    string responseBody = Post("http://localhost:8086/announce", dic);
+                    string responseBody = Post(url, dic);
                     Console.WriteLine(responseBody);
                 }
                 catch (System.Net.WebException)
