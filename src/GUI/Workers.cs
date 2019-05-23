@@ -50,7 +50,7 @@ namespace GUI
             keyboardWatcher.Start();
             mouseWatcher.Start();
 
-            
+
             // 获得到信号量表示结束这一线程
             semaphore.WaitOne();
             keyboardWatcher.Stop();
@@ -78,12 +78,16 @@ namespace GUI
                 try
                 {
                     ct.ThrowIfCancellationRequested();
-                }catch(OperationCanceledException)
-                {
-                    break;
                 }
-                string responseBody = Post("http://localhost:8086/announce", dic);
-                Console.WriteLine(responseBody);
+                catch (OperationCanceledException)
+                { break; }
+                try
+                {
+                    string responseBody = Post("http://localhost:8086/announce", dic);
+                    Console.WriteLine(responseBody);
+                }
+                catch (System.Net.WebException)
+                { }
             }
         }
 

@@ -62,15 +62,8 @@ namespace GUI
 
         private void btn_stop_Click(object sender, EventArgs e)
         {
-            
-            try
-            {
-                reporterCancellation.Cancel();
-            }catch (OperationCanceledException)
-            {
+            reporterCancellation.Cancel();
 
-            }
-            
             this.semaphore.Release();
             Console.WriteLine("in btn_stop_Click, release semaphore");
             this.thread.Join();
