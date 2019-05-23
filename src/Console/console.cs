@@ -98,12 +98,12 @@ namespace ActionHook.ConsoleApp
         }
     }
 
-
     public class ConsoleApp2
     {
         private EventHookFactory eventHookFactory;
         private MouseWatcher mouseWatcher;
         private KeyboardWatcher keyboardWatcher;
+        private string tmp_str;
 
         public ConsoleApp2(TextBox tb_keyboard, TextBox tb_mouse)
         {
@@ -116,6 +116,7 @@ namespace ActionHook.ConsoleApp
                 string msg = $"Key {e.KeyData.EventType} event of key {e.KeyData.Keyname}";
                 tb_keyboard.Text = msg;
                 Console.WriteLine(msg);
+                tmp_str += msg;
             };
 
             this.mouseWatcher = eventHookFactory.GetMouseWatcher();
@@ -124,15 +125,23 @@ namespace ActionHook.ConsoleApp
                 string msg = $"Mouse event {e.Message.ToString()} at point {e.Point.x},{e.Point.y}";
                 tb_mouse.Text = msg;
                 Console.WriteLine(msg);
+                tmp_str += msg;
             };
         }
 
-        public void run(Semaphore semaphore)
+        public string run(Semaphore semaphore, string url)
         {
             Console.WriteLine("in ConsoleApp2.run()");
+
+            tmp_str = "";
             keyboardWatcher.Start();
             //mouseWatcher.Start();
 
+            // 示例发送HTTP报文
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic.Add("0", "11");
+            dic.Add("a", "4");
+            dic.Add("b", "2019");
 
             Task.Factory.StartNew(async () =>
             {
@@ -146,10 +155,11 @@ namespace ActionHook.ConsoleApp
 
             // 主线程阻塞在这里
             semaphore.WaitOne();
-
             keyboardWatcher.Stop();
             mouseWatcher.Stop();
             eventHookFactory.Dispose();
+
+            return tmp_str;
         }
 
         // 示例HTTP-post请求
@@ -189,4 +199,5 @@ namespace ActionHook.ConsoleApp
             return result;
         }
     }
+
 }

@@ -66,6 +66,7 @@
             // 
             this.tb_keyboard.Location = new System.Drawing.Point(94, 29);
             this.tb_keyboard.Name = "tb_keyboard";
+            this.tb_keyboard.ReadOnly = true;
             this.tb_keyboard.Size = new System.Drawing.Size(211, 25);
             this.tb_keyboard.TabIndex = 2;
             // 
@@ -73,6 +74,7 @@
             // 
             this.tb_mouse.Location = new System.Drawing.Point(94, 60);
             this.tb_mouse.Name = "tb_mouse";
+            this.tb_mouse.ReadOnly = true;
             this.tb_mouse.Size = new System.Drawing.Size(211, 25);
             this.tb_mouse.TabIndex = 3;
             // 
@@ -172,8 +174,8 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tb_keyboard;
-        private System.Windows.Forms.TextBox tb_mouse;
+        public System.Windows.Forms.TextBox tb_keyboard;
+        public System.Windows.Forms.TextBox tb_mouse;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tb_url;
