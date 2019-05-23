@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Management;
-using System.Drawing;
 
 namespace GUI
 {
@@ -20,7 +19,7 @@ namespace GUI
         private KeyboardWatcher keyboardWatcher;
         private string tmp_str = "";
 
-        public ConsoleApp2(TextBox tb_keyboard, TextBox tb_mouse,ListView list)
+        public ConsoleApp2(TextBox tb_keyboard, TextBox tb_mouse)
         {
             Console.WriteLine("New ConsoleApp2!");
             this.eventHookFactory = new EventHookFactory();
@@ -31,72 +30,17 @@ namespace GUI
                 string msg = $"Key {e.KeyData.EventType} event of key {e.KeyData.Keyname}";
                 tb_keyboard.Text = msg;
                 Console.WriteLine(msg);
-                tmp_str += msg + "\r\n";
-                draw(e.KeyData.Keyname,list);
+                tmp_str += msg + "\n";
             };
+
             this.mouseWatcher = eventHookFactory.GetMouseWatcher();
             this.mouseWatcher.OnMouseInput += (s, e) =>
             {
                 string msg = $"Mouse event {e.Message.ToString()} at point {e.Point.x},{e.Point.y}";
                 tb_mouse.Text = msg;
                 Console.WriteLine(msg);
-                tmp_str += msg + "\r\n";
+                tmp_str += msg + "\n";
             };
-        }
-
-        private int l = 0;
-        public void draw(string c ,ListView list)
-        {
-            if ( c.Length == 1 || c.Length == 2)
-            {
-                //还原上一步颜色
-                if (l < 0) return;
-                ListViewItem item = list.Items[l / 10];
-                item.UseItemStyleForSubItems = false;
-                item.SubItems[l % 10].BackColor = Color.White;
-
-                //显示现在的颜色
-                if (c.Length == 2)
-                {
-                    l = position(c[1] + "");
-                }
-                else
-                {
-                    l = position(c);
-                }
-                if (l < 0) return;
-                item = list.Items[l / 10];
-                item.UseItemStyleForSubItems = false;
-                item.SubItems[l % 10].BackColor = Color.DarkCyan;
-            }
-        }
-
-        //确定键盘的位置 以显示颜色 找不到返回-1
-        public int position( string c )
-        {
-            char[,] low = new char[4, 10] { { '1','2','3','4','5','6','7','8','9','0' },
-               { 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p' } ,
-               { 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ' ' } ,
-               { ' ', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ' ', ' ' } };
-            char[,] upper = new char[4, 10] { { '!','@','#','$','%','^','&','*','(',')' },
-               { 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P' } ,
-               { 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ' ' } ,
-               { ' ', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ' ', ' ' } };
-            for (int i=0;i<4;i++)
-            {
-                for(int j=0;j<10;j++)
-                {
-                    if( c[0]==low[i,j] )
-                    {                       
-                        return i*10+j;
-                    }
-                    if (c[0] == upper[i, j])
-                    {
-                        return i*10+j;
-                    }
-                }
-            }
-            return -1;
         }
 
         public string run(Semaphore semaphore, string url)
