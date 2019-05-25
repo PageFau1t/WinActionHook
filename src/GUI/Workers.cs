@@ -51,7 +51,7 @@ namespace GUI
                     keyLog += "</LeftShift>";
 
                 }
-                string msg = $"Key {e.KeyData.EventType} event of key {e.KeyData.Keyname}";
+                string msg = $"Key {e.KeyData.EventType} of Key {e.KeyData.Keyname}";
                 tb_keyboard.Text = msg;
                 //Console.WriteLine(msg);
                 tmp_str += msg + "\r\n";
@@ -60,7 +60,7 @@ namespace GUI
             this.mouseWatcher = eventHookFactory.GetMouseWatcher();
             this.mouseWatcher.OnMouseInput += (s, e) =>
             {
-                string msg = $"Mouse event {e.Message.ToString()} at point {e.Point.x},{e.Point.y}";
+                string msg = $"{e.Message.ToString()} at {e.Point.x},{e.Point.y}";
                 tb_mouse.Text = msg;
                 //Console.WriteLine(msg);
                 tmp_str += msg + "\r\n";
