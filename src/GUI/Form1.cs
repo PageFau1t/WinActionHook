@@ -129,7 +129,7 @@ namespace GUI
             this.thread.Start();
 
             reporterCancellation = new CancellationTokenSource();
-            task_Reporter = Task.Run(() => { ScheduledReporter.Run(reporterCancellation.Token, url, app); }, reporterCancellation.Token);
+            task_Reporter = Task.Run(() => { ScheduledReporter.Run(reporterCancellation.Token, url); }, reporterCancellation.Token);
 
             //btn_start.disable();
             //btn_stop.enable();

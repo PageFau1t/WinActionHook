@@ -1,3 +1,0 @@
-<Delete><LeftShift><OemPlus></LeftShift><OemQuotes><OemPeriod>txt<LeftCtrl>s
-<LeftCtrl><Tab><LeftCtrl><Tab><LeftCtrl><Tab><LeftCtrl><Tab>
-<LeftCtrl><Tab>adm<LeftCtrl><Tab><LeftCtrl><Tab><LeftCtrl><Tab><LeftCtrl><Tab><LeftCtrl><Tab>

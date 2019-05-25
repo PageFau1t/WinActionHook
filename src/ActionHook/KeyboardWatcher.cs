@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using ActionHook.Helpers;
 using ActionHook.Hooks;
 
@@ -23,7 +22,6 @@ namespace ActionHook
     public class KeyData
     {
         public KeyEvent EventType;
-        public Key Key; // 添加：原始扫描码
         public string Keyname;
         public string UnicodeCharacter;
     }
@@ -144,7 +142,6 @@ namespace ActionHook
             keyQueue.Enqueue(new KeyData
             {
                 UnicodeCharacter = e.Character,
-                Key = e.Key,
                 Keyname = e.Key.ToString(),
                 EventType = (KeyEvent)e.EventType
             });

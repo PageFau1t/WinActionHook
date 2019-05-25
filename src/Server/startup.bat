@@ -1,2 +1,2 @@
 @echo off
-D:\Project\_Py\pipenv-general\.venv\Scripts\python serv.py
+C:\Projects\_Py\venv-tornado\.venv\Scripts\python serv.py
