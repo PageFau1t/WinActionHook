@@ -59,7 +59,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 69);
+            this.label2.Location = new System.Drawing.Point(5, 76);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 16);
             this.label2.TabIndex = 1;
@@ -67,18 +67,20 @@
             // 
             // tb_keyboard
             // 
-            this.tb_keyboard.Location = new System.Drawing.Point(93, 31);
+            this.tb_keyboard.Font = new System.Drawing.Font("Verdana", 10.6875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_keyboard.Location = new System.Drawing.Point(68, 31);
             this.tb_keyboard.Name = "tb_keyboard";
             this.tb_keyboard.ReadOnly = true;
-            this.tb_keyboard.Size = new System.Drawing.Size(211, 26);
+            this.tb_keyboard.Size = new System.Drawing.Size(236, 31);
             this.tb_keyboard.TabIndex = 2;
             // 
             // tb_mouse
             // 
-            this.tb_mouse.Location = new System.Drawing.Point(93, 64);
+            this.tb_mouse.Font = new System.Drawing.Font("Calibri", 9.35F);
+            this.tb_mouse.Location = new System.Drawing.Point(68, 69);
             this.tb_mouse.Name = "tb_mouse";
             this.tb_mouse.ReadOnly = true;
-            this.tb_mouse.Size = new System.Drawing.Size(211, 26);
+            this.tb_mouse.Size = new System.Drawing.Size(236, 28);
             this.tb_mouse.TabIndex = 3;
             // 
             // groupBox1
@@ -91,7 +93,7 @@
             this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Location = new System.Drawing.Point(34, 88);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(324, 107);
+            this.groupBox1.Size = new System.Drawing.Size(331, 116);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "实时状态";
@@ -138,7 +140,7 @@
             this.btn_stop.BackColor = System.Drawing.Color.White;
             this.btn_stop.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn_stop.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.btn_stop.Location = new System.Drawing.Point(431, 152);
+            this.btn_stop.Location = new System.Drawing.Point(431, 164);
             this.btn_stop.Name = "btn_stop";
             this.btn_stop.Size = new System.Drawing.Size(90, 28);
             this.btn_stop.TabIndex = 9;
@@ -151,7 +153,7 @@
             this.btn_read.BackColor = System.Drawing.Color.White;
             this.btn_read.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn_read.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.btn_read.Location = new System.Drawing.Point(588, 150);
+            this.btn_read.Location = new System.Drawing.Point(588, 162);
             this.btn_read.Name = "btn_read";
             this.btn_read.Size = new System.Drawing.Size(111, 30);
             this.btn_read.TabIndex = 10;
@@ -170,7 +172,7 @@
             this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.listView1.HideSelection = false;
             this.listView1.LabelWrap = false;
-            this.listView1.Location = new System.Drawing.Point(34, 226);
+            this.listView1.Location = new System.Drawing.Point(34, 242);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(405, 148);
             this.listView1.TabIndex = 11;
