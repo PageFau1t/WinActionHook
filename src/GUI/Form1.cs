@@ -157,13 +157,24 @@ namespace GUI
 
         private void btn_read_Click(object sender, EventArgs e)
         {
-            StreamReader sr = new StreamReader(logpath, Encoding.Default);
-            string content;
-            while ((content = sr.ReadLine()) != null)
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = "c:\\";
+            openFileDialog.Filter = "文本文件|*.txt";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                this.textBox1.AppendText(content.ToString()+"\n");
+                string fileName = openFileDialog.FileName;
+                StreamReader sr = new StreamReader(fileName, Encoding.Default);
+                string content;
+                int cnt = 100;
+                while ((content = sr.ReadLine()) != null && cnt > 0)
+                {
+                    this.textBox1.AppendText(content.ToString() + "\n");
+                    cnt--;
+                }
+                this.textBox1.AppendText("最多显示前100条");
+                sr.Close();
             }
-            sr.Close();
         }
 
         private void button1_Click_1(object sender, EventArgs e)
