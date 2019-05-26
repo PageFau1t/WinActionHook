@@ -31,6 +31,11 @@ namespace GUI
             semaphore.WaitOne();             // 我自己先拿走一个 
             init_form();
 
+            btn_start.Enabled = true;
+            btn_stop.Enabled = false;
+            button1.Enabled = false;
+            btn_read.Enabled = true;
+
         }
 
         private void init_form()
@@ -111,18 +116,6 @@ namespace GUI
         {
             string url = tb_url.Text;
 
-            //try
-            //{
-            //    test_if_our(url)
-            //    connect();
-            //}
-            //catch (Exception)
-            //{
-            //    MessageBox message = new MessageBox("invalid url for peeper server!\n");
-            //    message.show()
-            //    throw;
-            //}
-
             ConsoleApp2 app = new ConsoleApp2(this.tb_keyboard, this.tb_mouse,this.listView1);
             this.thread = new Thread(() => this.tmp_str = app.run(this.semaphore, url));
             Console.WriteLine("start thread!");
@@ -131,8 +124,8 @@ namespace GUI
             reporterCancellation = new CancellationTokenSource();
             task_Reporter = Task.Run(() => { ScheduledReporter.Run(reporterCancellation.Token, url, app); }, reporterCancellation.Token);
 
-            //btn_start.disable();
-            //btn_stop.enable();
+            btn_start.Enabled = false;
+            btn_stop.Enabled = true;
 
         }
 
@@ -145,19 +138,12 @@ namespace GUI
             Console.WriteLine("in btn_stop_Click, release semaphore");
             this.thread.Join();
             Console.WriteLine("in btn_stop_Click, Join!");
-            //btn_start.enable();
-            //btn_stop.disable();
+            btn_start.Enabled = true;
+            btn_stop.Enabled = false;
+            button1.Enabled = true;
         }
 
-        public void set_tb_keyboard(string s)
-        {
-            this.tb_keyboard.Text = s;
-        }
 
-        public void set_tb_mouse(string s)
-        {
-            this.tb_mouse.Text = s;
-        }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
@@ -182,11 +168,25 @@ namespace GUI
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            FileStream fs = new FileStream(logpath, FileMode.Append, FileAccess.Write);
-            StreamWriter sw = new StreamWriter(fs);
-            sw.Write(tmp_str);
-            sw.Close();
-            fs.Close();
+            // "保存为"对话框
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "文本文件|*.txt";
+            // 显示对话框
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                // 文件名
+                string fileName = dialog.FileName;
+                // 创建文件，准备写入
+                FileStream fs = File.Open(fileName,
+                        FileMode.Create,
+                        FileAccess.Write);
+                StreamWriter wr = new StreamWriter(fs);
+                wr.Write(this.tmp_str);
+                // 关闭文件
+                wr.Flush();
+                wr.Close();
+                fs.Close();
+            }
         }
 
         private void label3_Click(object sender, EventArgs e)
